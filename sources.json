@@ -1,0 +1,12 @@
+{
+  "metadata_csv": "https://raw.githubusercontent.com/Axekinn/ps4-scraper/main/ps4_titles.csv",
+  "catalog_sources": [
+    {
+      "name": "FPKGi Catalog Hub (public index)",
+      "url": "https://raw.githubusercontent.com/Dinos17/FPKGi-Catalog-Hub/main/ps4/games.json",
+      "enabled": true
+    }
+  ],
+  "local_catalogs": ["GAMES_CUSTOM.json"],
+  "excluded_title_ids": []
+}
