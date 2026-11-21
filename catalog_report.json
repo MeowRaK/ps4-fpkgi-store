@@ -1,0 +1,30 @@
+{
+  "generated_utc": "2026-11-21T01:16:40.483335+00:00",
+  "metadata_title_ids_after_filter": 49037,
+  "download_source_entries_read": 873,
+  "fpkgi_download_entries_after_filter": 868,
+  "unique_title_ids_with_download": 867,
+  "metadata_only_records": 48170,
+  "excluded_entries": 4,
+  "skipped_reasons": {
+    "missing_required_fields": 1,
+    "duplicate_mirror": 4
+  },
+  "source_reports": [
+    {
+      "source": "FPKGi Catalog Hub (public index)",
+      "entries_read": 873
+    },
+    {
+      "source": "GAMES_CUSTOM.json",
+      "entries_read": 0
+    }
+  ],
+  "caveats": [
+    "A title record is not a unique game: editions and regions may vary.",
+    "Presence in a third-party FPKGi index does not verify its link works or its contents are authorized.",
+    "An unknown language is kept to avoid losing English-capable games.",
+    "Metadata-only titles have no download button in stock FPKGi+."
+  ],
+  "source_fetch_errors": []
+}
