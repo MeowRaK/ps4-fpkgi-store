@@ -1,0 +1,39 @@
+name: Build PS4 catalog
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '29 6 * * 0'
+  push:
+    paths:
+      - 'build_ps4_catalog.py'
+      - 'sources.json'
+      - 'GAMES_CUSTOM.json'
+      - 'tests/**'
+      - '.github/workflows/update-ps4-catalog.yml'
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Unit tests
+        run: python -m unittest discover -s tests -v
+      - name: Generate full PS4 library and downloadable FPKGi list
+        run: python build_ps4_catalog.py --config sources.json --output .
+      - name: Validate generated JSON
+        run: |
+          python -m json.tool GAMES.json > /dev/null
+          python -m json.tool PS4_LIBRARY.json > /dev/null
+          python -m json.tool PS4_LANGUAGE_EXCLUDED.json > /dev/null
+          python -m json.tool catalog_report.json > /dev/null
+          python -c 'import json; r=json.load(open("catalog_report.json")); assert r["fpkgi_download_entries_after_filter"]>0; assert r["metadata_title_ids_after_filter"]>1000'
+      - name: Commit refreshed catalog data
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add GAMES.json PS4_LIBRARY.json PS4_LANGUAGE_EXCLUDED.json catalog_report.json
+          git diff --staged --quiet || (git commit -m 'Refresh PS4 catalog' && git push)
